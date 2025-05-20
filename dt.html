@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>API Connector - Data/Airtime</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f1f1f1;
+      padding: 20px;
+    }
+    .container {
+      background: white;
+      padding: 20px;
+      max-width: 500px;
+      margin: auto;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #ccc;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background: green;
+      color: white;
+      cursor: pointer;
+    }
+    h2 {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Connect Data/Airtime API</h2>
+    
+    <label>Provider Name</label>
+    <select id="provider">
+      <option value="alrahuzdata">Alrahuzdata</option>
+      <option value="bilalsadasub">Bilalsadasub</option>
+      <option value="legitdataway">Legitdataway</option>
+      <option value="maskawasub">MaskawaSub</option>
+    </select>
+
+    <label>API URL</label>
+    <input type="text" id="apiUrl" placeholder="https://example.com/api/endpoint">
+
+    <label>API Key</label>
+    <input type="text" id="apiKey" placeholder="Enter your API key">
+
+    <label>Secret Key (optional)</label>
+    <input type="text" id="secretKey" placeholder="If applicable">
+
+    <label>Contract Code (optional)</label>
+    <input type="text" id="contractCode" placeholder="If applicable">
+
+    <button onclick="connectAPI()">Connect</button>
+    <p id="result" style="color: green; margin-top: 10px;"></p>
+  </div>
+
+  <script>
+    function connectAPI() {
+      const provider = document.getElementById("provider").value;
+      const apiUrl = document.getElementById("apiUrl").value;
+      const apiKey = document.getElementById("apiKey").value;
+      const secretKey = document.getElementById("secretKey").value;
+      const contractCode = document.getElementById("contractCode").value;
+
+      const config = {
+        provider,
+        apiUrl,
+        apiKey,
+        secretKey,
+        contractCode
+      };
+
+      // Store in localStorage (you can save to database later via PHP or backend)
+      localStorage.setItem(`api_config_${provider}`, JSON.stringify(config));
+
+      document.getElementById("result").innerText = `Successfully connected to ${provider}`;
+    }
+  </script>
+</body>
+</html>

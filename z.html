@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Buy Data</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f1f1f1;
+      margin: 0;
+      padding: 20px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    header img {
+      height: 70px;
+      margin-right: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0, 0, 255, 0.4);
+    }
+
+    h1 {
+      font-size: 26px;
+      color: #004080;
+    }
+
+    .networks img {
+      width: 80px;
+      height: 80px;
+      margin: 5px;
+      cursor: pointer;
+      border-radius: 50%;
+      border: 2px solid transparent;
+    }
+
+    .networks img.selected {
+      border-color: green;
+    }
+
+    input, select, button {
+      display: block;
+      margin: 10px 0;
+      padding: 10px;
+      width: 100%;
+      max-width: 400px;
+      font-size: 16px;
+    }
+
+    .categories {
+      margin: 15px 0;
+    }
+
+    .categories button {
+      margin: 5px 10px 5px 0;
+      padding: 10px 20px;
+      background-color: white;
+      color: #004080;
+      border: 2px solid #004080;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .plans div {
+      padding: 10px;
+      background: white;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .plans div.selected {
+      border-color: green;
+      background-color: #e6f2ff;
+    }
+
+    #pinInput {
+      display: none;
+      background: white;
+      padding: 20px;
+      border: 1px solid #ccc;
+      max-width: 400px;
+      border-radius: 6px;
+      margin-top: 15px;
+      position: relative;
+    }
+
+    .pin-display {
+      font-size: 24px;
+      text-align: center;
+      margin-bottom: 10px;
+      letter-spacing: 8px;
+    }
+
+    .pin-pad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .pin-pad button {
+      font-size: 18px;
+      padding: 15px;
+      background-color: #004080;
+      color: white;
+      border: none;
+      border-radius: 6px;
+    }
+
+    .fingerprint {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      background-color: #ccc;
+      border-radius: 50%;
+      padding: 15px;
+      cursor: pointer;
+    }
+
+    .fingerprint:hover {
+      background-color: #bbb;
+    }
+
+    #receipt {
+      display: none;
+      background: #e6f0ff;
+      padding: 20px;
+      margin-top: 20px;
+      border: 2px solid #004080;
+      border-radius: 6px;
+      max-width: 400px;
+    }
+     #receipt {
+      display: none;
+      background: #e6f0ff;
+      padding: 20px;
+      margin-top: 20px;
+      border: 2px solid #004080;
+      border-radius: 6px;
+      max-width: 400px;
+    }
+
+    .receipt-header {
+  display: flex;
+  justify-content: space-between; /* Wannan zai sanya hotunan daga hagu zuwa dama */
+  align-items: center; /* Wannan zai sanya hotunan a tsakiya daga sama zuwa kasa */
+  width: 90%; /* Wannan zai sanya receipt-header cika dukan fadin allo */
+  padding: 20px 20px; /* Tazara a kusa da header */
+}
+
+.receipt-header img {
+  height: 70px; /* Za ka iya daidaita girman hoton */
+}
+  </style>
+</head>
+<body>
+  <header>
+    <img src="data.png" alt="Logo" />
+    <h1>Buy Data</h1>
+  </header>
+
+  <div class="networks">
+    <img src="mtnlogo.png" data-network="MTN">
+    <img src="glologo.png" data-network="GLO">
+    <img src="airtellogo.png" data-network="AIRTEL">
+    <img src="9moblilelogo.png" data-network="9MOBILE">
+  </div>
+<input type="tel" id="phone" placeholder="Mobile Number">
+  
+    
+
+  <div class="categories">
+    <button onclick="selectCategory('SME')">SME</button>
+    <button onclick="selectCategory('SME2')">SME2</button>
+    <button onclick="selectCategory('CORPORATE')">CORPORATE</button>
+    <button onclick="selectCategory('GIFTING')">GIFTING</button>
+  </div>
+
+  <div class="plans" id="plansContainer"></div>
+
+  <div id="pinInput">
+    <div class="pin-display" id="pinDisplay">____</div>
+    <div class="pin-pad">
+      <button onclick="appendPin('1')">1</button>
+      <button onclick="appendPin('2')">2</button>
+      <button onclick="appendPin('3')">3</button>
+      <button onclick="appendPin('4')">4</button>
+      <button onclick="appendPin('5')">5</button>
+      <button onclick="appendPin('6')">6</button>
+      <button onclick="appendPin('7')">7</button>
+      <button onclick="appendPin('8')">8</button>
+      <button onclick="appendPin('9')">9</button>
+      <button onclick="clearPin()">C</button>
+      <button onclick="appendPin('0')">0</button>
+      <button onclick="submitPin()">OK</button>
+    </div>
+    <div class="fingerprint" onclick="submitFingerprint()">🔒</div>
+  </div>
+
+  <div id="receipt">
+      <div class="receipt-header">
+      <img src="data.png" alt="logo left">
+      <img src="avatar.png" alt="logo right">
+      </div>
+    <h3>Transaction Successful</h3>
+    <p><strong>Transaction ID:</strong> <span id="rTransactionID"></span></p>
+    <p><strong>Network:</strong> <span id="rNetwork"></span></p>
+    <p><strong>Phone:</strong> <span id="rPhone"></span></p>
+    <p><strong>Category:</strong> <span id="rCategory"></span></p>
+    <p><strong>Plan:</strong> <span id="rPlan"></span></p>
+    <p><strong>Date:</strong> <span id="rDate"></span></p>
+  </div>
+
+  <script>
+    const networks = document.querySelectorAll('.networks img');
+    const phoneInput = document.getElementById('phone');
+    const plansContainer = document.getElementById('plansContainer');
+    const pinInputDiv = document.getElementById('pinInput');
+    const pinDisplay = document.getElementById('pinDisplay');
+    const receiptDiv = document.getElementById('receipt');
+
+    let selectedNetwork = '';
+    let selectedCategory = '';
+    let selectedPlan = '';
+    let pin = '';
+    let transactionID = '';
+
+    phoneInput.addEventListener('input', () => {
+      const val = phoneInput.value;
+      if (val.startsWith('0803') || val.startsWith('0703') || val.startsWith('0813')) autoSelectNetwork('MTN');
+      else if (val.startsWith('0805') || val.startsWith('0705')) autoSelectNetwork('GLO');
+      else if (val.startsWith('0802') || val.startsWith('0701')) autoSelectNetwork('AIRTEL');
+      else if (val.startsWith('0809')) autoSelectNetwork('9MOBILE');
+    });
+
+    function autoSelectNetwork(network) {
+      selectedNetwork = network;
+      networks.forEach(img => {
+        img.classList.toggle('selected', img.dataset.network === network);
+      });
+    }
+
+    networks.forEach(img => {
+      img.addEventListener('click', () => {
+        selectedNetwork = img.dataset.network;
+        networks.forEach(i => i.classList.remove('selected'));
+        img.classList.add('selected');
+      });
+    });
+
+    function selectCategory(category) {
+      selectedCategory = category;
+      renderPlans(category);
+    }
+
+    function renderPlans(category) {
+      const plans = {
+        SME: [
+          { size: '300MB', price: 120 },
+          { size: '600MB', price: 225 },
+          { size: '1GB', price: 370 }
+        ],
+        SME2: [
+          { size: '500MB', price: 200 },
+          { size: '1GB', price: 400 }
+        ],
+        CORPORATE: [
+          { size: '1GB', price: 450 },
+          { size: '2GB', price: 850 }
+        ],
+        GIFTING: [
+          { size: '1GB', price: 500 },
+          { size: '2GB', price: 950 }
+        ]
+      };
+
+      plansContainer.innerHTML = '';
+      plans[category].forEach(plan => {
+        const div = document.createElement('div');
+        div.textContent = `${plan.size} - ₦${plan.price}`;
+        div.onclick = () => {
+          document.querySelectorAll('.plans div').forEach(p => p.classList.remove('selected'));
+          div.classList.add('selected');
+          selectedPlan = `${plan.size} - ₦${plan.price}`;
+          showPinInput();
+        };
+        plansContainer.appendChild(div);
+      });
+    }
+
+    function showPinInput() {
+      if (!selectedNetwork || !selectedCategory || !selectedPlan || !phoneInput.value) {
+        alert('Please complete all selections');
+        return;
+      }
+      pin = '';
+      updatePinDisplay();
+      pinInputDiv.style.display = 'block';
+      receiptDiv.style.display = 'none';
+    }
+
+    function appendPin(num) {
+      if (pin.length < 4) {
+        pin += num;
+        updatePinDisplay();
+      }
+    }
+
+    function clearPin() {
+      pin = '';
+      updatePinDisplay();
+    }
+
+    function updatePinDisplay() {
+      pinDisplay.textContent = pin.padEnd(4, '_');
+    }
+
+    function submitPin() {
+      if (pin.length === 4) {
+        transactionID = generateTransactionID();
+        showReceipt();
+      } else {
+        alert("Enter 4-digit PIN");
+      }
+    }
+
+    function generateTransactionID() {
+      return 'TX' + Math.floor(Math.random() * 1000000); // Example ID: TX123456
+    }
+
+    function submitFingerprint() {
+      const confirmed = confirm("Fingerprint authentication failed. Try again?");
+      if (confirmed) {
+        transactionID = generateTransactionID();
+        showReceipt();
+      }
+    }
+
+    function showReceipt() {
+      const now = new Date();
+      document.getElementById('rTransactionID').textContent = transactionID;
+      document.getElementById('rNetwork').textContent = selectedNetwork;
+      document.getElementById('rPhone').textContent = phoneInput.value;
+      document.getElementById('rCategory').textContent = selectedCategory;
+      document.getElementById('rPlan').textContent = selectedPlan;
+      document.getElementById('rDate').textContent = now.toLocaleString();
+      receiptDiv.style.display = 'block';
+      pinInputDiv.style.display = 'none';
+
+      // Save the transaction to user history (simulated for now)
+      saveTransaction(transactionID, selectedNetwork, phoneInput.value, selectedCategory, selectedPlan, now);
+    }
+
+    function saveTransaction(transactionID, network, phone, category, plan, date) {
+      // Simulate saving transaction details to the user's transaction history
+      const transactionHistory = JSON.parse(localStorage.getItem('transactionHistory') || '[]');
+      transactionHistory.push({ transactionID, network, phone, category, plan, date });
+      localStorage.setItem('transactionHistory', JSON.stringify(transactionHistory));
+    }
+  </script>
+</body>
+</html>

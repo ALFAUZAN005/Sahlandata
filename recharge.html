@@ -1,0 +1,145 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buy Recharge Card - AlfauzanDataSub/ID</title>
+  <style>
+    body { font-family: Arial; margin: 0; padding: 0; background: #f2f2f2; }
+    .container { max-width: 800px; margin: auto; background: #fff; padding: 20px; }
+    .step { display: none; }
+    .active { display: block; }
+    .network-btns img { width: 80px; margin: 10px; cursor: pointer; border: 2px solid transparent; border-radius: 10px; }
+    .network-btns img.selected { border-color: green; }
+    .receipt { border: 2px solid #000; padding: 20px; margin: 10px 0; background: #fff; width: 100%; display: flex; flex-direction: row; justify-content: space-between; align-items: center; }
+    .receipt h3 { margin: 0; font-size: 24px; }
+    .btn { padding: 10px 20px; margin: 10px; background: green; color: #fff; border: none; cursor: pointer; border-radius: 5px; }
+    .hidden { display: none; }
+    .fingerprint { font-size: 40px; text-align: center; cursor: pointer; }
+    .discount { font-weight: bold; color: green; }
+    input[type="number"] {
+  width: 100%;
+  padding: 12px 15px;
+  margin: 10px 0;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input[type="number"]:focus {
+  border-color: #00aa00;
+  box-shadow: 0 0 8px rgba(0, 170, 0, 0.3);
+  outline: none;
+}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Buy Recharge Card</h2><!-- Step 1 -->
+<div class="step active" id="step1">
+  <h3>Select Network</h3>
+  <div class="network-btns">
+    <img src="mtnlogo.png" onclick="selectNetwork('MTN')" id="MTN">
+    <img src="airtellogo.png" onclick="selectNetwork('AIRTEL')" id="AIRTEL">
+    <img src="glologo.png" onclick="selectNetwork('GLO')" id="GLO">
+    <img src="9moblilelogo.png" onclick="selectNetwork('9MOBILE')" id="9MOBILE">
+  </div>
+  <button class="btn" onclick="nextStep(2)">Next</button>
+</div>
+
+<!-- Step 2 -->
+<div class="step" id="step2">
+  <h3>Enter Amount and Quantity</h3>
+  <label>Recharge Amount (₦):</label>
+  <input type="number" id="amount" placeholder="e.g. 100, 200, 500" oninput="calculateDiscount()">
+  <br><br>
+  <label>Quantity:</label>
+  <input type="number" id="quantity" placeholder="Enter quantity" oninput="calculateDiscount()">
+  <p class="discount" id="discount"></p>
+  <button class="btn" onclick="nextStep(3)">Next</button>
+</div>
+
+<!-- Step 3 -->
+<div class="step" id="step3">
+  <h3>Payment</h3>
+  <p>Click fingerprint to authorize payment.</p>
+  <div class="fingerprint" onclick="nextStep(4)"> 
+    🔍
+  </div>
+</div>
+
+<!-- Step 4 -->
+<div class="step" id="step4">
+  <h3>Receipts</h3>
+  <div id="receipts"></div>
+</div>
+
+  </div>  <script>
+    let currentStep = 1;
+    let selectedNetwork = '';
+
+    function nextStep(n) {
+      document.getElementById('step' + currentStep).classList.remove('active');
+      document.getElementById('step' + n).classList.add('active');
+      currentStep = n;
+      if(n === 4) generateReceipts();
+    }
+
+    function selectNetwork(name) {
+      selectedNetwork = name;
+      document.querySelectorAll('.network-btns img').forEach(img => img.classList.remove('selected'));
+      document.getElementById(name).classList.add('selected');
+    }
+
+    function calculateDiscount() {
+      const qty = parseInt(document.getElementById('quantity').value);
+      const amt = parseInt(document.getElementById('amount').value);
+      if (!isNaN(qty) && !isNaN(amt)) {
+        const total = qty * amt;
+        const discount = qty * 10;
+        document.getElementById('discount').textContent = `Total: ₦${total} | Discount: ₦${discount} | Pay: ₦${total - discount}`;
+      } else {
+        document.getElementById('discount').textContent = '';
+      }
+    }
+
+    function generateReceipts() {
+      const qty = parseInt(document.getElementById('quantity').value);
+      const amount = parseInt(document.getElementById('amount').value);
+      const container = document.getElementById('receipts');
+      container.innerHTML = '';
+      for (let i = 0; i < qty; i++) {
+        const pin = Math.floor(100000000000 + Math.random() * 900000000000);
+        const div = document.createElement('div');
+        div.className = 'receipt';
+        div.innerHTML = `
+          <div>
+            <img src="${selectedNetwork.toLowerCase()}.png" alt="${selectedNetwork}" style="height: 50px;">
+          </div>
+          <div>
+            <h3>${pin}</h3>
+            <p style="margin: 0;">Network: ${selectedNetwork}</p>
+            <p style="margin: 0;">Amount: ₦${amount}</p>
+            <p style="margin: 0;">Website: alfauzandatasub/ID</p>
+          </div>
+          <div>
+            <button class="btn" onclick="downloadReceipt('${pin}', '${selectedNetwork}', ${amount})">Download</button>
+          </div>
+        `;
+        container.appendChild(div);
+      }
+    }
+
+    function downloadReceipt(pin, network, amount) {
+      const element = document.createElement('a');
+      const content = `Recharge PIN: ${pin}\nNetwork: ${network}\nAmount: ₦${amount}\nWebsite: alfauzandatasub/ID`;
+      const file = new Blob([content], {type: 'text/plain'});
+      element.href = URL.createObjectURL(file);
+      element.download = `${network}_recharge_${pin}.txt`;
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+    }
+  </script></body>
+</html>

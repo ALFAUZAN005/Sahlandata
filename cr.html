@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create User</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f9f9f9;
+    }
+
+    h2 {
+      color: #333;
+    }
+
+    form {
+      background: #fff;
+      padding: 20px;
+      max-width: 400px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 10px;
+      background: #28a745;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    table {
+      margin-top: 30px;
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+
+    th {
+      background-color: #007bff;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Create New User</h2>
+
+  <form id="createUserForm">
+    <label>Full Name</label>
+    <input type="text" id="fullName" required>
+
+    <label>Username</label>
+    <input type="text" id="username" required>
+
+    <label>Email</label>
+    <input type="email" id="email" required>
+
+    <label>PIN</label>
+    <input type="password" id="pin" required>
+
+    <label>Password</label>
+    <input type="password" id="password" required>
+
+    <label>Phone</label>
+    <input type="text" id="phone" required>
+
+    <label>Status</label>
+    <select id="status" required>
+      <option value="Active">Active</option>
+      <option value="Inactive">Inactive</option>
+    </select>
+
+    <label>Balance (₦)</label>
+    <input type="number" id="balance" required>
+
+    <button type="submit">Add User</button>
+  </form>
+
+  <h2>All Users</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Full Name</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Status</th>
+        <th>Balance</th>
+      </tr>
+    </thead>
+    <tbody id="userList"></tbody>
+  </table>
+
+  <script>
+    const userList = document.getElementById("userList");
+    const createForm = document.getElementById("createUserForm");
+
+    const users = [];
+
+    createForm.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const user = {
+        fullName: document.getElementById("fullName").value,
+        username: document.getElementById("username").value,
+        email: document.getElementById("email").value,
+        pin: document.getElementById("pin").value,
+        password: document.getElementById("password").value,
+        phone: document.getElementById("phone").value,
+        status: document.getElementById("status").value,
+        balance: parseFloat(document.getElementById("balance").value)
+      };
+
+      users.push(user);
+      updateUserTable();
+      createForm.reset();
+    });
+
+    function updateUserTable() {
+      userList.innerHTML = "";
+      users.forEach((user, index) => {
+        userList.innerHTML += `
+          <tr>
+            <td>${user.fullName}</td>
+            <td>${user.username}</td>
+            <td>${user.email}</td>
+            <td>${user.phone}</td>
+            <td>${user.status}</td>
+            <td>₦${user.balance.toFixed(2)}</td>
+          </tr>
+        `;
+      });
+    }
+  </script>
+
+</body>
+</html>

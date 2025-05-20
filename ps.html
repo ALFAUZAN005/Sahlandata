@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Change Password</title>
+  <style>
+    body {
+      background: #f0f4f8;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .password-box {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #1e90ff;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    input[type="password"] {
+      width: 85%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    .save-btn {
+      width: 100%;
+      background-color: #1e90ff;
+      color: white;
+      padding: 12px;
+      border: none;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .save-btn:hover {
+      background-color: #006fd6;
+    }
+
+    .message {
+      text-align: center;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="password-box">
+    <h2>Change Password</h2>
+
+    <label for="oldPass">Old Password</label>
+    <input type="password" id="oldPass" placeholder="Enter your old password">
+
+    <label for="newPass">New Password</label>
+    <input type="password" id="newPass" placeholder="Enter new password">
+
+    <label for="confirmPass">Confirm New Password</label>
+    <input type="password" id="confirmPass" placeholder="Re-enter new password">
+
+    <button class="save-btn" onclick="changePassword()">Save Password</button>
+
+    <div class="message" id="msgBox"></div>
+  </div>
+
+  <script>
+    function changePassword() {
+      const oldPass = document.getElementById('oldPass').value;
+      const newPass = document.getElementById('newPass').value;
+      const confirmPass = document.getElementById('confirmPass').value;
+      const msg = document.getElementById('msgBox');
+
+      if (!oldPass || !newPass || !confirmPass) {
+        msg.style.color = "red";
+        msg.innerText = "All fields are required.";
+        return;
+      }
+
+      if (newPass !== confirmPass) {
+        msg.style.color = "red";
+        msg.innerText = "New passwords do not match.";
+        return;
+      }
+
+      // Simulate success (replace this with backend connection)
+      msg.style.color = "green";
+      msg.innerText = "Password changed successfully!";
+    }
+  </script>
+
+</body>
+</html>

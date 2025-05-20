@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Transaction History</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #f4f4f4;
+      padding: 20px;
+    }
+    input[type="text"] {
+      padding: 8px;
+      width: 300px;
+      margin-bottom: 15px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+    }
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+    th {
+      background: #007BFF;
+      color: white;
+    }
+    tr:hover {
+      background: #f1f1f1;
+    }
+    .receipt {
+      display: none;
+      background: white;
+      border: 1px solid #ccc;
+      padding: 20px;
+      margin-top: 20px;
+    }
+    button {
+      padding: 6px 12px;
+      background: green;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background: darkgreen;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Transaction History</h2>
+<input type="text" id="searchInput" placeholder="Search by Type, Number, or ID...">
+
+<table id="transactionTable">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Type</th>
+      <th>Amount</th>
+      <th>Status</th>
+      <th>Details</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Transactions will be loaded here -->
+  </tbody>
+</table>
+
+<div class="receipt" id="receiptBox">
+  <h3>Transaction Receipt</h3>
+  <p id="receiptDetails"></p>
+  <button onclick="window.print()">Print Receipt</button>
+</div>
+
+<script>
+  const transactions = [
+    {
+      id: "TX12345",
+      date: "2025-04-15",
+      type: "Buy Data",
+      amount: "₦500",
+      status: "Successful",
+      details: "MTN 1.5GB to 08123456789"
+    },
+    {
+      id: "TX78901",
+      date: "2025-04-14",
+      type: "Electricity",
+      amount: "₦2000",
+      status: "Successful",
+      details: "Ikeja Electric, Meter: 1234567890"
+    },
+    {
+      id: "TX45678",
+      date: "2025-04-13",
+      type: "Buy Airtime",
+      amount: "₦100",
+      status: "Failed",
+      details: "GLO VTU to 08012345678"
+    }
+  ];
+
+  const tableBody = document.querySelector("#transactionTable tbody");
+  const receiptBox = document.getElementById("receiptBox");
+  const receiptDetails = document.getElementById("receiptDetails");
+
+  function loadTransactions(data) {
+    tableBody.innerHTML = "";
+    data.forEach(tx => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${tx.date}</td>
+        <td>${tx.type}</td>
+        <td>${tx.amount}</td>
+        <td>${tx.status}</td>
+        <td>${tx.details}</td>
+        <td><button onclick="showReceipt('${tx.id}')">View Receipt</button></td>
+      `;
+      tableBody.appendChild(row);
+    });
+  }
+
+  function showReceipt(id) {
+    const tx = transactions.find(t => t.id === id);
+    receiptDetails.innerHTML = `
+      <strong>Transaction ID:</strong> ${tx.id}<br>
+      <strong>Date:</strong> ${tx.date}<br>
+      <strong>Type:</strong> ${tx.type}<br>
+      <strong>Amount:</strong> ${tx.amount}<br>
+      <strong>Status:</strong> ${tx.status}<br>
+      <strong>Details:</strong> ${tx.details}
+    `;
+    receiptBox.style.display = "block";
+  }
+
+  document.getElementById("searchInput").addEventListener("input", function () {
+    const term = this.value.toLowerCase();
+    const filtered = transactions.filter(tx =>
+      tx.type.toLowerCase().includes(term) ||
+      tx.details.toLowerCase().includes(term) ||
+      tx.id.toLowerCase().includes(term)
+    );
+    loadTransactions(filtered);
+    receiptBox.style.display = "none";
+  });
+
+  loadTransactions(transactions);
+</script>
+
+</body>
+</html>

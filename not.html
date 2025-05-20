@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Send Email to Users</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7f9;
+      padding: 20px;
+    }
+    .container {
+      background: white;
+      max-width: 550px;
+      margin: auto;
+      padding: 30px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      position: relative;
+    }
+    h2 {
+      color: #1e88e5;
+      text-align: center;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+    }
+    select, input, textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-top: 5px;
+    }
+    button {
+      margin-top: 60px;
+      width: 80%;
+      background: #1e88e5;
+      color: white;
+      border: none;
+      padding: 16px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #1565c0;
+    }
+    .alert {
+      margin-top: 15px;
+      padding: 10px;
+      display: none;
+      border-radius: 5px;
+    }
+    .success {
+      background: #c8e6c9;
+      color: #2e7d32;
+    }
+    .error {
+      background: #ffcdd2;
+      color: #c62828;
+    }
+    .top-right-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: #43a047;
+      padding: 8px 14px;
+      color: white;
+      font-size: 14px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .top-right-button:hover {
+      background: #2e7d32;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <button class="top-right-button" onclick="sendToAllUsers()">Send to All Users</button>
+
+    <h2>Send Message to User Email</h2>
+
+    <label>Select User Email</label>
+    <select id="userEmail">
+      <option value="">-- Choose a User Email --</option>
+      <option value="user1@example.com">user1@example.com</option>
+      <option value="user2@example.com">user2@example.com</option>
+      <option value="user3@example.com">user3@example.com</option>
+    </select>
+
+    <label>Subject</label>
+    <input type="text" id="subject" placeholder="Enter subject">
+
+    <label>Message</label>
+    <textarea id="message" rows="5" placeholder="Write your message here..."></textarea>
+
+    <button onclick="sendEmail()">Send Message</button>
+
+    <div class="alert success" id="successMsg">Message ready to be sent!</div>
+    <div class="alert error" id="errorMsg">Please fill all required fields.</div>
+  </div>
+
+  <script>
+    function sendEmail() {
+      let email = document.getElementById("userEmail").value.trim();
+      let subject = document.getElementById("subject").value.trim();
+      let message = document.getElementById("message").value.trim();
+      let successMsg = document.getElementById("successMsg");
+      let errorMsg = document.getElementById("errorMsg");
+
+      successMsg.style.display = "none";
+      errorMsg.style.display = "none";
+
+      if (email === "" || subject === "" || message === "") {
+        errorMsg.style.display = "block";
+        return;
+      }
+
+      successMsg.innerText = "Message prepared to send to: " + email;
+      successMsg.style.display = "block";
+    }
+
+    function sendToAllUsers() {
+      let subject = document.getElementById("subject").value.trim();
+      let message = document.getElementById("message").value.trim();
+      let successMsg = document.getElementById("successMsg");
+      let errorMsg = document.getElementById("errorMsg");
+
+      successMsg.style.display = "none";
+      errorMsg.style.display = "none";
+
+      if (subject === "" || message === "") {
+        errorMsg.innerText = "Please fill subject and message before sending to all users.";
+        errorMsg.style.display = "block";
+        return;
+      }
+
+      successMsg.innerText = "Message ready to be sent to all users!";
+      successMsg.style.display = "block";
+    }
+  </script>
+
+</body>
+</html>

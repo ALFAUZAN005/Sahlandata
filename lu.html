@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lock/Unlock Services</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f6f8;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    .service-card {
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .service-title {
+      font-weight: bold;
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+    .toggle-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .toggle-btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background-color: #3498db;
+      color: white;
+      transition: background-color 0.3s;
+    }
+    .toggle-btn.locked {
+      background-color: #e74c3c;
+    }
+    .save-btn {
+      margin-top: 30px;
+      background-color: #2ecc71;
+      color: white;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      display: block;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Lock / Unlock Services</h1>
+
+  <!-- MTN Data Services -->
+  <div class="service-card" id="mtn-services">
+    <div class="service-title">MTN Data Services</div>
+    <div class="toggle-group">
+      <button class="toggle-btn" onclick="toggleLock(this)">SME</button>
+      <button class="toggle-btn" onclick="toggleLock(this)">SME2</button>
+      <button class="toggle-btn" onclick="toggleLock(this)">COOPERATE GIFTING</button>
+      <button class="toggle-btn" onclick="toggleLock(this)">GIFTING</button>
+      <button class="toggle-btn" onclick="toggleLock(this)">COUPONS</button>
+    </div>
+  </div>
+
+  <!-- Airtel Data Services -->
+  <div class="service-card" id="airtel-services">
+    <div class="service-title">Airtel Data Services</div>
+    <div class="toggle-group">
+      <button class="toggle-btn" onclick="toggleLock(this)">SME</button>
+      <button class="toggle-btn" onclick="toggleLock(this)">SME2</button>
+      <button class="toggle-btn" onclick="toggleLock(this)">COOPERATE GIFTING</button>
+      <button class="toggle-btn" onclick="toggleLock(this)">GIFTING</button>
+      <button class="toggle-btn" onclick="toggleLock(this)">COUPONS</button>
+    </div>
+  </div>
+
+  <!-- GLO Data Services -->
+  <div class="service-card" id="glo-services">
+    <div class="service-title">GLO Data Services</div>
+    <div class="toggle-group">
+      <button class="toggle-btn" onclick="toggleLock(this)">SME</button>
+      <button class="toggle-btn" onclick="toggleLock(this)">SME2</button>
+      <button class="toggle-btn" onclick="toggleLock(this)">COOPERATE GIFTING</button>
+      <button class="toggle-btn" onclick="toggleLock(this)">GIFTING</button>
+      <button class="toggle-btn" onclick="toggleLock(this)">COUPONS</button>
+    </div>
+  </div>
+
+  <!-- 9MOBILE Data Services -->
+  <div class="service-card" id="9mobile-services">
+    <div class="service-title">9MOBILE Data Services</div>
+    <div class="toggle-group">
+      <button class="toggle-btn" onclick="toggleLock(this)">SME</button>
+      <button class="toggle-btn" onclick="toggleLock(this)">SME2</button>
+      <button class="toggle-btn" onclick="toggleLock(this)">COOPERATE GIFTING</button>
+      <button class="toggle-btn" onclick="toggleLock(this)">GIFTING</button>
+      <button class="toggle-btn" onclick="toggleLock(this)">COUPONS</button>
+    </div>
+  </div>
+
+  <!-- Other Services -->
+  <div class="service-card" id="other-services">
+    <div class="service-title">Other Services</div>
+    <div class="toggle-group">
+      <button class="toggle-btn" onclick="toggleLock(this)">Airtime</button>
+      <button class="toggle-btn" onclick="toggleLock(this)">Cable</button>
+      <button class="toggle-btn" onclick="toggleLock(this)">Bill</button>
+      <button class="toggle-btn" onclick="toggleLock(this)">Result Checker</button>
+      <button class="toggle-btn" onclick="toggleLock(this)">NIN</button>
+      <button class="toggle-btn" onclick="toggleLock(this)">BVN</button>
+      <button class="toggle-btn" onclick="toggleLock(this)">Data Card</button>
+      <button class="toggle-btn" onclick="toggleLock(this)">Recharge Card</button>
+      <button class="toggle-btn" onclick="toggleLock(this)">Other</button>
+    </div>
+  </div>
+
+  <!-- Save Changes Button -->
+  <button class="save-btn" onclick="saveChanges()">Save Changes</button>
+
+  <script>
+    function toggleLock(btn) {
+      // Toggles lock/unlock state
+      btn.classList.toggle('locked');
+      if (btn.classList.contains('locked')) {
+        btn.textContent = `${btn.textContent} (Locked)`;
+      } else {
+        btn.textContent = `${btn.textContent.replace(' (Locked)', '')}`;
+      }
+    }
+
+    function saveChanges() {
+      alert("Changes have been saved successfully.");
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ha">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Dashboard</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: #f4f6f9;
+      padding-bottom: 90px;
+    }
+
+    .header {
+      background: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+
+    .logo {
+      width: 70px;
+    }
+
+
+    .notification-bar {
+      background: #007bff;
+      color: white;
+      padding: 8px 0;
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .notification-bar h5 {
+      display: inline-block;
+      white-space: nowrap;
+      animation: slide 12s linear infinite;
+      font-size: 14px;
+    }
+
+    @keyframes slide {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+
+    .balance-card {
+      background: #007bff;
+      color: white;
+      margin: 20px;
+      padding: 15px;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      flex-wrap: wrap;
+    }
+
+    .top-buttons {
+      display: flex;
+      justify-content: space-around;
+      padding: 0 20px 10px;
+    }
+
+    .top-buttons a {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 14px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      padding: 10px 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      text-align: center;
+      padding: 20px 10px;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+      transition: 0.3s;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+    }
+
+    .card img {
+      width: 80px;
+      height: 80px;
+    }
+
+    .card-title {
+      margin-top: 10px;
+      font-size: 15px;
+      font-weight: bold;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 10px 0;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
+      z-index: 10;
+    }
+
+    .bottom-nav a {
+      text-decoration: none;
+      color: #333;
+      text-align: center;
+      font-size: 12px;
+    }
+
+    .bottom-nav img {
+      width: 24px;
+      height: 24px;
+      margin-bottom: 4px;
+    }
+
+    .whatsapp-btn {
+      position: fixed;
+      bottom: 100px;
+      right: 20px;
+      background: #25D366;
+      color: white;
+      border-radius: 50%;
+      padding: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      z-index: 10;
+    }
+
+    .whatsapp-btn img {
+      width: 28px;
+      height: 28px;
+    }
+
+    /* Notification Box */
+    .notification {
+      background-color: #ffc107;
+      padding: 15px;
+      margin: 20px;
+      border-radius: 10px;
+      color: black;
+      font-size: 16px;
+      text-align: center;
+      display: none;
+      position: relative;
+    }
+
+    .notification img {
+      width: 40px;
+      height: 40px;
+      position: absolute;
+      left: 15px;
+      top: 15px;
+    }
+
+    .notification .message {
+      margin-left: 60px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .notification button {
+      background: #28a745;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      cursor: pointer;
+    }
+
+    .notification button:hover {
+      background: #218838;
+    }
+
+    .user-info {
+      text-align: center;
+      margin: 40px 0;
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <img src="avatar.png" class="avatar" alt="User">
+  <img src="0.png" class="logo" alt="Logo">
+</div>
+
+<!-- NOTIFICATION BAR -->
+<div class="notification-bar">
+  <h5 id="movingText">Welcome to our website zaku samu karin sabbin abubuwa daga garemu</h5>
+  <img src="speaker.png" alt="Speaker" id="speakButton" style="width: 24px; height: 24px; position: absolute; right: 10px; top: 8px; cursor: pointer;">
+</div>
+
+<!-- NOTIFICATION BOX -->
+<div class="notification" id="notificationBox">
+  <img src="info-icon.png" alt="info-icon">
+  <div class="message">Sakon ku yana nan. Danna OK don ɓacewa.</div>
+  <button onclick="closeNotification()">OK</button>
+</div>
+
+<!-- BALANCE -->
+<div class="balance-card">
+  <div>
+    <div style="font-size: 16px; font-weight: normal;">welcome, <strong id="username">User</strong>!</div>
+    <div>Wallet Balance:</div>
+  </div>
+  <span id="wallet">₦5,200</span>
+</div>
+
+<!-- TOP BUTTONS -->
+<div class="top-buttons">
+  <a href="fund.html">Fund Wallet</a>
+  <a href="tr.html">History</a>
+</div>
+
+<!-- SERVICE CARDS -->
+<div class="card-container">
+  <a href="buydata.html" class="card">
+    <img src="O.png">
+    <div class="card-title">Buy Data</div>
+  </a>
+  <a href="buyairtime.html" class="card">
+    <img src="airtim.png">
+    <div class="card-title">Buy Airtime</div>
+  </a>
+  <a href="buyelectric.html" class="card">
+    <img src="2.png">
+    <div class="card-title">Electricity</div>
+  </a>
+  <a href="cb.html" class="card">
+    <img src="tv.png">
+    <div class="card-title">Cable TV</div>
+  </a>
+  <a href="recharge.html" class="card">
+    <img src="p.png">
+    <div class="card-title">Recharge Card</div>
+  </a>
+  <a href="exam.html" class="card">
+    <img src="4.png">
+    <div class="card-title">Exam PIN</div>
+  </a>
+  <a href="datacard.html" class="card">
+    <img src="datac.png">
+    <div class="card-title">Data Card</div>
+  </a>
+  <a href="nin.html" class="card">
+    <img src="nbn.png">
+    <div class="card-title">Nin/bvn/info</div>
+  </a>
+  <a href="cl.html" class="card">
+    <img src="cl.png">
+    <div class="card-title">Calculator</div>
+  </a>
+  <a href="cl.html" class="card">
+    <img src="m.png">
+    <div class="card-title">MASALLACIN MATASA</div>
+  </a>
+</div>
+
+
+<!-- WhatsApp Support -->
+<a href="wsp.html" class="whatsapp-btn">
+  <img src="w.png" alt="Support">
+</a>
+
+<!-- BOTTOM NAVIGATION -->
+<div class="bottom-nav">
+  <a href="first.html">
+    <img src="h.png">
+    <div>Home</div>
+  </a>
+  <a href="fund.html">
+    <img src="wl.png">
+    <div>Wallet</div>
+  </a>
+  <a href="profile.html">
+    <img src="pr.png">
+    <div>Profile</div>
+  </a>
+</div>
+
+<script>
+  // Set default user data (in real app, you can get from DB or login session)
+  const username = localStorage.getItem("username") || "Alfauzan";
+  const walletBalance = localStorage.getItem("wallet") || "₦5,200";
+
+  document.getElementById("username").textContent = username;
+  document.getElementById("wallet").textContent = walletBalance;
+
+  // Function to show notification
+  function showNotification() {
+    const notificationBox = document.getElementById('notificationBox');
+    notificationBox.style.display = 'block'; // Show notification
+  }
+
+  // Function to hide notification
+  function closeNotification() {
+    const notificationBox = document.getElementById('notificationBox');
+    notificationBox.style.display = 'none'; // Hide notification
+  }
+
+  // Call showNotification after a few seconds
+  setTimeout(showNotification, 1000); // Shows after 1 second (for demonstration)
+</script>
+
+</body>
+</html>

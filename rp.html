@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Reset User Password</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      padding: 20px;
+    }
+    .container {
+      background: #fff;
+      max-width: 450px;
+      margin: auto;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background: #007bff;
+      color: white;
+      margin-top: 20px;
+    }
+    .success {
+      display: none;
+      margin-top: 15px;
+      background: #d4edda;
+      color: #155724;
+      padding: 10px;
+      border-radius: 5px;
+    }
+    .error {
+      display: none;
+      margin-top: 15px;
+      background: #f8d7da;
+      color: #721c24;
+      padding: 10px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Reset User Password</h2>
+
+    <label for="username">Username</label>
+    <input type="text" id="username" placeholder="Enter username">
+
+    <label for="newPass">New Password</label>
+    <input type="password" id="newPass" placeholder="Enter new password">
+
+    <label for="notify">Send Email Notification?</label>
+    <select id="notify">
+      <option value="yes">Yes</option>
+      <option value="no">No</option>
+    </select>
+
+    <button onclick="resetPassword()">Submit</button>
+
+    <div class="success" id="successMsg">Password reset successful!</div>
+    <div class="error" id="errorMsg">Error: Please fill all fields.</div>
+  </div>
+
+  <script>
+    // Example user data (for simulation only)
+    const users = [
+      { username: "alimusa", email: "ali@example.com", password: "123456" },
+      { username: "fatibello", email: "fati@gmail.com", password: "abc123" }
+    ];
+
+    function resetPassword() {
+      const username = document.getElementById("username").value.trim().toLowerCase();
+      const newPass = document.getElementById("newPass").value;
+      const notify = document.getElementById("notify").value;
+      const successMsg = document.getElementById("successMsg");
+      const errorMsg = document.getElementById("errorMsg");
+
+      successMsg.style.display = "none";
+      errorMsg.style.display = "none";
+
+      if (!username || !newPass) {
+        errorMsg.style.display = "block";
+        return;
+      }
+
+      const user = users.find(u => u.username.toLowerCase() === username);
+
+      if (!user) {
+        errorMsg.innerText = "User not found.";
+        errorMsg.style.display = "block";
+        return;
+      }
+
+      user.password = newPass;
+
+      successMsg.innerText = `Password for ${username} has been reset!`;
+      successMsg.style.display = "block";
+
+      if (notify === "yes") {
+        alert(`(Simulated) Email sent to: ${user.email}`);
+      }
+
+      // Clear form
+      document.getElementById("username").value = "";
+      document.getElementById("newPass").value = "";
+    }
+  </script>
+
+</body>
+</html>

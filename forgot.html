@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Forgot Password</title>
+  <style>
+    body {
+      background: #0d1b64;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: sans-serif;
+    }
+    .card {
+      background: white;
+      padding: 30px 20px;
+      border-radius: 20px;
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    .card h2 {
+      color: #0d1b64;
+      margin-bottom: 10px;
+    }
+    .card p {
+      color: #555;
+      margin-bottom: 20px;
+    }
+    input[type="text"],
+    input[type="email"] {
+      width: 80%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #0d1b64;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    a {
+      display: inline-block;
+      margin-top: 15px;
+      text-decoration: none;
+      color: #0d1b64;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Forgot Password</h2>
+    <p>Enter your phone number or email to reset your password.</p>
+    
+    <input type="text" placeholder="Phone Number or Email" />
+    <button onclick="submitForgot()">Send Reset Link / OTP</button>
+
+    <a href="login.html">Go Back to Login</a>
+  </div>
+
+  <script>
+    function submitForgot() {
+      alert("A reset link or OTP will be sent (demo only)");
+      // Za ka iya tura zuwa page na "verify" ko "set new password"
+      // window.location.href = 'rs.html';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>System Info Settings</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f5f5f5;
+      padding: 30px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 25px;
+    }
+
+    .form-group {
+      display: flex;
+      align-items: center;
+      background: #fff;
+      padding: 10px 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 15px;
+    }
+
+    .form-group i {
+      font-size: 18px;
+      margin-right: 12px;
+      color: #007bff;
+      min-width: 30px;
+      text-align: center;
+    }
+
+    .form-group input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-size: 16px;
+      background: transparent;
+    }
+
+    .save-btn {
+      display: block;
+      width: 100%;
+      background: #007bff;
+      color: #fff;
+      font-size: 18px;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: background 0.3s;
+    }
+
+    .save-btn:hover {
+      background: #0056b3;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-color: #4BB543;
+      color: white;
+      padding: 15px 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      font-size: 16px;
+      z-index: 1000;
+      animation: fadein 0.5s, fadeout 0.5s 3s;
+    }
+
+    @keyframes fadein {
+      from { bottom: 10px; opacity: 0; }
+      to { bottom: 30px; opacity: 1; }
+    }
+
+    @keyframes fadeout {
+      from { bottom: 30px; opacity: 1; }
+      to { bottom: 10px; opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <h2>System Info Settings</h2>
+
+  <div class="form-group">
+    <i class="fas fa-building"></i>
+    <input type="text" id="systemName" placeholder="System Name">
+  </div>
+
+  <div class="form-group">
+    <i class="fas fa-phone"></i>
+    <input type="text" id="phone" placeholder="System Phone Number">
+  </div>
+
+  <div class="form-group">
+    <i class="fas fa-envelope"></i>
+    <input type="email" id="email" placeholder="System Email">
+  </div>
+
+  <div class="form-group">
+    <i class="fas fa-map-marker-alt"></i>
+    <input type="text" id="address" placeholder="System Address">
+  </div>
+
+  <div class="form-group">
+    <i class="fab fa-facebook"></i>
+    <input type="text" id="facebook" placeholder="Facebook Link">
+  </div>
+
+  <div class="form-group">
+    <i class="fab fa-youtube"></i>
+    <input type="text" id="youtube" placeholder="YouTube Link">
+  </div>
+
+  <div class="form-group">
+    <i class="fab fa-tiktok"></i>
+    <input type="text" id="tiktok" placeholder="TikTok Link">
+  </div>
+
+  <button class="save-btn" onclick="saveChanges()">Save Changes</button>
+
+  <div id="toast" style="display:none;"></div>
+
+  <script>
+    function saveChanges() {
+      const data = {
+        name: document.getElementById('systemName').value,
+        phone: document.getElementById('phone').value,
+        email: document.getElementById('email').value,
+        address: document.getElementById('address').value,
+        facebook: document.getElementById('facebook').value,
+        youtube: document.getElementById('youtube').value,
+        tiktok: document.getElementById('tiktok').value
+      };
+
+      showToast("Changes saved successfully!");
+      // Nan zaka iya aika `data` zuwa backend ko database
+      console.log(data); // temporary
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.className = "toast";
+      toast.style.display = "block";
+
+      setTimeout(() => {
+        toast.style.display = "none";
+      }, 4000);
+    }
+  </script>
+
+</body>
+</html>

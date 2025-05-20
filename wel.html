@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome Message Settings</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f8fb;
+      padding: 30px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 25px;
+    }
+
+    .form-box {
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      max-width: 700px;
+      margin: auto;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    textarea {
+      width: 80%;
+      min-height: 120px;
+      padding: 12px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      resize: vertical;
+      outline: none;
+    }
+
+    input[type="file"] {
+      margin-top: 8px;
+    }
+
+    #imagePreview {
+      margin-top: 15px;
+      max-height: 200px;
+      display: none;
+      border-radius: 10px;
+      border: 2px dashed #ccc;
+      padding: 8px;
+    }
+
+    .save-btn {
+      background: #28a745;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 15px;
+    }
+
+    .save-btn:hover {
+      background: #1e7e34;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-color: #4BB543;
+      color: white;
+      padding: 15px 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      font-size: 16px;
+      z-index: 1000;
+      animation: fadein 0.5s, fadeout 0.5s 3s;
+    }
+
+    @keyframes fadein {
+      from { bottom: 10px; opacity: 0; }
+      to { bottom: 30px; opacity: 1; }
+    }
+
+    @keyframes fadeout {
+      from { bottom: 30px; opacity: 1; }
+      to { bottom: 10px; opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Welcome Message Settings</h2>
+
+  <div class="form-box">
+    <div class="form-group">
+      <label for="welcomeMsg"><i class="fas fa-comment-dots"></i> Welcome Message</label>
+      <textarea id="welcomeMsg" placeholder="Type your welcome message to users here..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="welcomeImage"><i class="fas fa-image"></i> Optional Welcome Image</label>
+      <input type="file" id="welcomeImage" accept="image/*" onchange="previewImage(event)">
+      <img id="imagePreview" src="" alt="Preview">
+    </div>
+
+    <button class="save-btn" onclick="saveWelcome()">Save Changes</button>
+  </div>
+
+  <div id="toast" style="display:none;"></div>
+
+  <script>
+    function previewImage(event) {
+      const reader = new FileReader();
+      reader.onload = function(){
+        const output = document.getElementById('imagePreview');
+        output.src = reader.result;
+        output.style.display = 'block';
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+
+    function saveWelcome() {
+      const message = document.getElementById('welcomeMsg').value;
+      const image = document.getElementById('welcomeImage').files[0];
+
+      // Nan zaka iya tura bayanai zuwa backend/database
+
+      console.log("Welcome Message:", message);
+      if (image) console.log("Selected Image:", image.name);
+
+      showToast("Welcome message saved successfully!");
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.className = "toast";
+      toast.style.display = "block";
+
+      setTimeout(() => {
+        toast.style.display = "none";
+      }, 4000);
+    }
+  </script>
+
+</body>
+</html>
